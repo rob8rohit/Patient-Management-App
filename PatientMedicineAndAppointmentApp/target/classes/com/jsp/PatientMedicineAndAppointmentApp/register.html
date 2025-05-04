@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register Patient</title>
+</head>
+<body>
+    <h2>Register Patient</h2>
+    <form id="regForm">
+        Name: <input type="text" name="name"><br>
+        Contact: <input type="text" name="contact"><br>
+        Medical History: <textarea name="medicalHistory"></textarea><br>
+        <button type="submit">Register</button>
+    </form>
+
+    <script>
+        document.getElementById('regForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const data = {
+                name: this.name.value,
+                contact: this.contact.value,
+                medicalHistory: this.medicalHistory.value
+            };
+
+            fetch('/api/patients/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(res => res.json())
+            .then(json => alert("Patient registered!"))
+            .catch(err => console.error(err));
+        });
+    </script>
+</body>
+</html>
